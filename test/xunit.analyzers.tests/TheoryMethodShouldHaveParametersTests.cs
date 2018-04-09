@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
 {
@@ -7,7 +8,7 @@ namespace Xunit.Analyzers
         readonly DiagnosticAnalyzer analyzer = new TheoryMethodShouldHaveParameters();
 
         [Fact]
-        public async void DoesNotFindErrorForFactMethod()
+        public async Task DoesNotFindErrorForFactMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "public class TestClass { [Xunit.Fact] public void TestMethod() { } }");
 
@@ -15,7 +16,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindErrorForTheoryMethodWithParameters()
+        public async Task DoesNotFindErrorForTheoryMethodWithParameters()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [Xunit.Theory] public void TestMethod(string s) { } }");
@@ -24,7 +25,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrorForTheoryMethodWithoutParameters()
+        public async Task FindsErrorForTheoryMethodWithoutParameters()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "class TestClass { [Xunit.Theory] public void TestMethod() { } }");
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -47,7 +48,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(AssertMethods))]
-        public async void FindsWarning_ForInstanceEqualsCheck(string method)
+        public async Task FindsWarning_ForInstanceEqualsCheck(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -59,7 +60,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(SupportedStringComparisons))]
-        public async void FindsWarning_ForTrueInstanceEqualsCheck_WithSupportedStringComparison(StringComparison comparison)
+        public async Task FindsWarning_ForTrueInstanceEqualsCheck_WithSupportedStringComparison(StringComparison comparison)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -71,7 +72,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(UnsupportedStringComparisons))]
-        public async void DoesNotFindWarning_ForTrueInstanceEqualsCheck_WithUnsupportedStringComparison(StringComparison comparison)
+        public async Task DoesNotFindWarning_ForTrueInstanceEqualsCheck_WithUnsupportedStringComparison(StringComparison comparison)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -83,7 +84,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(AllStringComparisons))]
-        public async void DoesNotFindWarning_ForFalseInstanceEqualsCheck_WithStringComparison(StringComparison comparison)
+        public async Task DoesNotFindWarning_ForFalseInstanceEqualsCheck_WithStringComparison(StringComparison comparison)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -95,7 +96,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(AssertMethods))]
-        public async void FindsWarning_ForStaticEqualsCheck(string method)
+        public async Task FindsWarning_ForStaticEqualsCheck(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -107,7 +108,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(SupportedStringComparisons))]
-        public async void FindsWarning_ForTrueStaticEqualsCheck_WithSupportedStringComparison(StringComparison comparison)
+        public async Task FindsWarning_ForTrueStaticEqualsCheck_WithSupportedStringComparison(StringComparison comparison)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -119,7 +120,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(UnsupportedStringComparisons))]
-        public async void DoesNotFindWarning_ForTrueStaticEqualsCheck_WithUnsupportedStringComparison(StringComparison comparison)
+        public async Task DoesNotFindWarning_ForTrueStaticEqualsCheck_WithUnsupportedStringComparison(StringComparison comparison)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -131,7 +132,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(AllStringComparisons))]
-        public async void DoesNotFindWarning_ForFalseStaticEqualsCheck_WithStringComparison(StringComparison comparison)
+        public async Task DoesNotFindWarning_ForFalseStaticEqualsCheck_WithStringComparison(StringComparison comparison)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {

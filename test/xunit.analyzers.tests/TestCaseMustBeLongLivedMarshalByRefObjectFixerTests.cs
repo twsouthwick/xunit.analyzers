@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CodeFixes;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -9,7 +10,7 @@ namespace Xunit.Analyzers
         readonly CodeFixProvider fixer = new TestCaseMustBeLongLivedMarshalByRefObjectFixer();
 
         [Fact]
-        public async void WithNoBaseClass_WithoutUsing_AddsBaseClass()
+        public async Task WithNoBaseClass_WithoutUsing_AddsBaseClass()
         {
             var code = "public class MyTestCase : Xunit.Abstractions.ITestCase { }";
 
@@ -19,7 +20,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void WithNoBaseClass_WithUsing_AddsBaseClass()
+        public async Task WithNoBaseClass_WithUsing_AddsBaseClass()
         {
             var code = "using Xunit; using Xunit.Abstractions; public class MyTestCase : ITestCase { }";
 
@@ -29,7 +30,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void WithBadBaseClass_WithoutUsing_ReplacesBaseClass()
+        public async Task WithBadBaseClass_WithoutUsing_ReplacesBaseClass()
         {
             var code = "public class Foo { } public class MyTestCase : Foo, Xunit.Abstractions.ITestCase { }";
 
@@ -39,7 +40,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void WithBadBaseClass_WithUsing_ReplacesBaseClass()
+        public async Task WithBadBaseClass_WithUsing_ReplacesBaseClass()
         {
             var code = "using Xunit; using Xunit.Abstractions; public class Foo { } public class MyTestCase : Foo, ITestCase { }";
 

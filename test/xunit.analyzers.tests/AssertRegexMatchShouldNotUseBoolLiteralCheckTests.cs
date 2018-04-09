@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -22,7 +23,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsWarning_ForStaticRegexIsMatch(string method)
+        public async Task FindsWarning_ForStaticRegexIsMatch(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -34,7 +35,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsWarning_ForInstaceRegexIsMatchWithInlineConstructedRegex(string method)
+        public async Task FindsWarning_ForInstaceRegexIsMatchWithInlineConstructedRegex(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -46,7 +47,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsWarning_ForInstaceRegexIsMatchWithConstructedRegexVariable(string method)
+        public async Task FindsWarning_ForInstaceRegexIsMatchWithConstructedRegexVariable(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {

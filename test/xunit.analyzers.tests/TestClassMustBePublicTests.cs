@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -19,7 +20,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void ForPublicClass_DoesNotFindError()
+        public async Task ForPublicClass_DoesNotFindError()
         {
             var source = "public class TestClass { [Xunit.Fact] public void TestMethod() { } }";
 
@@ -30,7 +31,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(CreateFactsInNonPublicClassCases))]
-        public async void ForFriendOrInternalClass_FindsError(
+        public async Task ForFriendOrInternalClass_FindsError(
             string factRelatedAttribute,
             string classAccessModifier)
         {
@@ -53,7 +54,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("")]
         [InlineData("public")]
-        public async void ForPartialClassInSameFile_WhenClassIsPublic_DoesNotFindError(string otherPartAccessModifier)
+        public async Task ForPartialClassInSameFile_WhenClassIsPublic_DoesNotFindError(string otherPartAccessModifier)
         {
             string source = @"
 public partial class TestClass
@@ -74,7 +75,7 @@ public partial class TestClass
         [Theory]
         [InlineData("")]
         [InlineData("public")]
-        public async void ForPartialClassInOtherFiles_WhenClassIsPublic_DoesNotFindError(string otherPartAccessModifier)
+        public async Task ForPartialClassInOtherFiles_WhenClassIsPublic_DoesNotFindError(string otherPartAccessModifier)
         {
             string source1 = @"
 public partial class TestClass
@@ -96,7 +97,7 @@ public partial class TestClass
         [InlineData("", "")]
         [InlineData("", "internal")]
         [InlineData("internal", "internal")]
-        public async void ForPartialClassInSameFile_WhenClassIsNonPublic_FindsError(
+        public async Task ForPartialClassInSameFile_WhenClassIsNonPublic_FindsError(
             string part1AccessModifier,
             string part2AccessModifier)
         {
@@ -125,7 +126,7 @@ public partial class TestClass
         [InlineData("", "")]
         [InlineData("", "internal")]
         [InlineData("internal", "internal")]
-        public async void ForPartialClassInOtherFiles_WhenClassIsNonPublic_FindsError(
+        public async Task ForPartialClassInOtherFiles_WhenClassIsNonPublic_FindsError(
             string part1AccessModifier,
             string part2AccessModifier)
         {

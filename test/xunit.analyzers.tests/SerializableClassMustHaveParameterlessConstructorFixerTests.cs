@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CodeFixes;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -9,7 +10,7 @@ namespace Xunit.Analyzers
         readonly CodeFixProvider fixer = new SerializableClassMustHaveParameterlessConstructorFixer();
 
         [Fact]
-        public async void WithNoParameterlessConstructor_AddsConstructor_WithoutUsing()
+        public async Task WithNoParameterlessConstructor_AddsConstructor_WithoutUsing()
         {
             var code =
 @"public class MyTestCase : Xunit.Abstractions.IXunitSerializable
@@ -33,7 +34,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void WithNoParameterlessConstructor_AddsConstructor_WithUsing()
+        public async Task WithNoParameterlessConstructor_AddsConstructor_WithUsing()
         {
             var code =
 @"using System;
@@ -63,7 +64,7 @@ public class MyTestCase : IXunitSerializable
         }
 
         [Fact]
-        public async void WithNonPublicParameterlessConstructor_ChangesVisibility_WithoutUsing()
+        public async Task WithNonPublicParameterlessConstructor_ChangesVisibility_WithoutUsing()
         {
             var code =
 @"public class MyTestCase : Xunit.Abstractions.IXunitSerializable
@@ -83,7 +84,7 @@ public class MyTestCase : IXunitSerializable
         }
 
         [Fact]
-        public async void WithNonPublicParameterlessConstructor_ChangesVisibility_WithUsing()
+        public async Task WithNonPublicParameterlessConstructor_ChangesVisibility_WithUsing()
         {
             var code =
 @"using System;
@@ -109,7 +110,7 @@ public class MyTestCase : IXunitSerializable
         }
 
         [Fact]
-        public async void PreservesExistingObsoleteAttribute()
+        public async Task PreservesExistingObsoleteAttribute()
         {
             var code =
 @"using obo = System.ObsoleteAttribute;

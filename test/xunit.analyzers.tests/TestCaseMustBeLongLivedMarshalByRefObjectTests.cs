@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -32,7 +33,7 @@ public class MyTestCase: {0} {{ }}
         }
 
         [Fact]
-        public async void NonTestCase_NoDiagnostics()
+        public async Task NonTestCase_NoDiagnostics()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "public class Foo { }");
 
@@ -40,7 +41,7 @@ public class MyTestCase: {0} {{ }}
         }
 
         [Fact]
-        public async void XunitTestCase_NoDiagnostics()
+        public async Task XunitTestCase_NoDiagnostics()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, XunitReferences.PkgExecutionExtensibility, "public class MyTestCase : Xunit.Sdk.XunitTestCase { }");
 
@@ -49,7 +50,7 @@ public class MyTestCase: {0} {{ }}
 
         [Theory]
         [MemberData(nameof(InterfacesWithBaseClasses))]
-        public async void InterfaceWithProperBaseClass_NoDiagnostics(string @interface, string baseClass)
+        public async Task InterfaceWithProperBaseClass_NoDiagnostics(string @interface, string baseClass)
         {
             var code = string.Format(Template, $"{baseClass}, {@interface}");
 
@@ -60,7 +61,7 @@ public class MyTestCase: {0} {{ }}
 
         [Theory]
         [MemberData(nameof(Interfaces))]
-        public async void InterfaceWithoutBaseClass_ReturnsError(string @interface)
+        public async Task InterfaceWithoutBaseClass_ReturnsError(string @interface)
         {
             var code = string.Format(Template, @interface);
 
@@ -77,7 +78,7 @@ public class MyTestCase: {0} {{ }}
 
         [Theory]
         [MemberData(nameof(Interfaces))]
-        public async void InterfaceWithBadBaseClass_ReturnsError(string @interface)
+        public async Task InterfaceWithBadBaseClass_ReturnsError(string @interface)
         {
             var code = string.Format(Template, $"Foo, {@interface}");
 

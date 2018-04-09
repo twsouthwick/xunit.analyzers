@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -22,7 +23,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void FindsWarning_ForBooleanContainsCheck(string method)
+        public async Task FindsWarning_ForBooleanContainsCheck(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -34,7 +35,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanContainsCheck_WithUserMessage(string method)
+        public async Task DoesNotFindWarning_ForBooleanContainsCheck_WithUserMessage(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -45,7 +46,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsWarning_ForBooleanTrueStartsWithCheck()
+        public async Task FindsWarning_ForBooleanTrueStartsWithCheck()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -56,7 +57,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsWarning_ForBooleanTrueStartsWithCheck_WithStringComparison()
+        public async Task FindsWarning_ForBooleanTrueStartsWithCheck_WithStringComparison()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -67,7 +68,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForBooleanFalseStartsWithCheck()
+        public async Task DoesNotFindWarning_ForBooleanFalseStartsWithCheck()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -78,7 +79,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForBooleanFalseStartsWithCheck_WithStringComparison()
+        public async Task DoesNotFindWarning_ForBooleanFalseStartsWithCheck_WithStringComparison()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -90,7 +91,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanStartsWithCheck_WithUserMessage(string method)
+        public async Task DoesNotFindWarning_ForBooleanStartsWithCheck_WithUserMessage(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -102,7 +103,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanStartsWithCheck_WithStringComparison_AndUserMessage(string method)
+        public async Task DoesNotFindWarning_ForBooleanStartsWithCheck_WithStringComparison_AndUserMessage(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -114,7 +115,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanStartsWithCheck_WithBoolAndCulture(string method)
+        public async Task DoesNotFindWarning_ForBooleanStartsWithCheck_WithBoolAndCulture(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -126,7 +127,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanStartsWithCheck_WithBoolAndCulture_AndUserMessage(string method)
+        public async Task DoesNotFindWarning_ForBooleanStartsWithCheck_WithBoolAndCulture_AndUserMessage(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -137,7 +138,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsWarning_ForBooleanTrueEndsWithCheck()
+        public async Task FindsWarning_ForBooleanTrueEndsWithCheck()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -148,7 +149,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsWarning_ForBooleanTrueEndsWithCheck_WithStringComparison()
+        public async Task FindsWarning_ForBooleanTrueEndsWithCheck_WithStringComparison()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -159,7 +160,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForBooleanFalseEndsWithCheck()
+        public async Task DoesNotFindWarning_ForBooleanFalseEndsWithCheck()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -170,7 +171,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForBooleanFalseEndsWithCheck_WithStringComparison()
+        public async Task DoesNotFindWarning_ForBooleanFalseEndsWithCheck_WithStringComparison()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -182,7 +183,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanEndsWithCheck_WithUserMessage(string method)
+        public async Task DoesNotFindWarning_ForBooleanEndsWithCheck_WithUserMessage(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -194,7 +195,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanEndsWithCheck_WithStringComparison_AndUserMessage(string method)
+        public async Task DoesNotFindWarning_ForBooleanEndsWithCheck_WithStringComparison_AndUserMessage(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -206,7 +207,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanEndsWithCheck_WithBoolAndCulture(string method)
+        public async Task DoesNotFindWarning_ForBooleanEndsWithCheck_WithBoolAndCulture(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -218,7 +219,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void DoesNotFindWarning_ForBooleanEndsWithCheck_WithBoolAndCulture_AndUserMessage(string method)
+        public async Task DoesNotFindWarning_ForBooleanEndsWithCheck_WithBoolAndCulture_AndUserMessage(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {

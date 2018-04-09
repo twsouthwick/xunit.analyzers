@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -22,7 +23,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsError_Interface(string method)
+        public async Task FindsError_Interface(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using System;
@@ -41,7 +42,7 @@ class TestClass
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsError_AbstractClass(string method)
+        public async Task FindsError_AbstractClass(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using System.IO;
@@ -60,7 +61,7 @@ class TestClass
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsError_UsingStatic(string method)
+        public async Task FindsError_UsingStatic(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using System;
@@ -79,7 +80,7 @@ class TestClass
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindError_NonAbstractClass(string method)
+        public async Task DoesNotFindError_NonAbstractClass(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using Xunit;
@@ -97,7 +98,7 @@ class TestClass
 
         [Theory]
         [InlineData("IsAssignableFrom")]
-        public async void DoesNotFindError_OtherMethods(string method)
+        public async Task DoesNotFindError_OtherMethods(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using System;

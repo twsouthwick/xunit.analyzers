@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -22,7 +23,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsWarning_ForNonGenericCall(string method)
+        public async Task FindsWarning_ForNonGenericCall(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {
@@ -34,7 +35,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForGenericCall(string method)
+        public async Task DoesNotFindWarning_ForGenericCall(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {

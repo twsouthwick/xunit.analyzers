@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -12,7 +13,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Equal")]
         [InlineData("NotEqual")]
-        public async void FindsWarning_ForFirstNullLiteral_StringOverload(string method)
+        public async Task FindsWarning_ForFirstNullLiteral_StringOverload(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -31,7 +32,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Equal")]
         [InlineData("NotEqual")]
-        public async void FindsWarning_ForFirstNullLiteral_StringOverload_WithCustomComparer(string method)
+        public async Task FindsWarning_ForFirstNullLiteral_StringOverload_WithCustomComparer(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -49,7 +50,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsWarning_ForFirstNullLiteral_ObjectOverload(string method)
+        public async Task FindsWarning_ForFirstNullLiteral_ObjectOverload(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -68,7 +69,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Equal")]
         [InlineData("NotEqual")]
-        public async void FindsWarning_ForFirstNullLiteral_ObjectOverload_WithCustomComparer(string method)
+        public async Task FindsWarning_ForFirstNullLiteral_ObjectOverload_WithCustomComparer(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -89,7 +90,7 @@ namespace Xunit.Analyzers
         [InlineData("NotEqual")]
         [InlineData("StrictEqual")]
         [InlineData("NotStrictEqual")]
-        public async void FindsWarning_ForFirstNullLiteral_GenericOverload(string method)
+        public async Task FindsWarning_ForFirstNullLiteral_GenericOverload(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -108,7 +109,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Equal")]
         [InlineData("NotEqual")]
-        public async void FindsWarning_ForFirstNullLiteral_GenericOverload_WithCustomComparer(string method)
+        public async Task FindsWarning_ForFirstNullLiteral_GenericOverload_WithCustomComparer(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -126,7 +127,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForOtherLiteral(string method)
+        public async Task DoesNotFindWarning_ForOtherLiteral(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -139,7 +140,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForSecondNullLiteral(string method)
+        public async Task DoesNotFindWarning_ForSecondNullLiteral(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {

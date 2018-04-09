@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -33,7 +34,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void FindsWarningForTrueCollectionContainsCheck(string collection)
+        public async Task FindsWarningForTrueCollectionContainsCheck(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -45,7 +46,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void FindsWarningForFalseCollectionContainsCheck(string collection)
+        public async Task FindsWarningForFalseCollectionContainsCheck(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -57,7 +58,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Enumerables))]
-        public async void FindsWarningForTrueLinqContainsCheck(string enumerable)
+        public async Task FindsWarningForTrueLinqContainsCheck(string enumerable)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -70,7 +71,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Enumerables))]
-        public async void FindsWarningForTrueLinqContainsCheckWithEqualityComparer(string enumerable)
+        public async Task FindsWarningForTrueLinqContainsCheckWithEqualityComparer(string enumerable)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -83,7 +84,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Enumerables))]
-        public async void FindsWarningForFalseLinqContainsCheck(string enumerable)
+        public async Task FindsWarningForFalseLinqContainsCheck(string enumerable)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -96,7 +97,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Enumerables))]
-        public async void FindsWarningForFalseLinqContainsCheckWithEqualityComparer(string enumerable)
+        public async Task FindsWarningForFalseLinqContainsCheckWithEqualityComparer(string enumerable)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -109,7 +110,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void DoesNotFindWarningForTrueCollectionContainsCheckWithAssertionMessage(string collection)
+        public async Task DoesNotFindWarningForTrueCollectionContainsCheckWithAssertionMessage(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -121,7 +122,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void DoesNotFindWarningForFalseCollectionContainsCheckWithAssertionMessage(string collection)
+        public async Task DoesNotFindWarningForFalseCollectionContainsCheckWithAssertionMessage(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -133,7 +134,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Enumerables))]
-        public async void DoesNotFindWarningForTrueLinqContainsCheckWithAssertionMessage(string enumerable)
+        public async Task DoesNotFindWarningForTrueLinqContainsCheckWithAssertionMessage(string enumerable)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -146,7 +147,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Enumerables))]
-        public async void DoesNotFindWarningForFalseLinqContainsCheckWithAssertionMessage(string enumerable)
+        public async Task DoesNotFindWarningForFalseLinqContainsCheckWithAssertionMessage(string enumerable)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -158,7 +159,7 @@ class TestClass { void TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotCrashForCollectionWithDifferentTypeParametersThanICollectionImplementation_ZeroParameters()
+        public async Task DoesNotCrashForCollectionWithDifferentTypeParametersThanICollectionImplementation_ZeroParameters()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Collections.Generic;
@@ -171,7 +172,7 @@ class TestClass { void TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotCrashForCollectionWithDifferentTypeParametersThanICollectionImplementation_TwoParameters()
+        public async Task DoesNotCrashForCollectionWithDifferentTypeParametersThanICollectionImplementation_TwoParameters()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Collections.Generic;

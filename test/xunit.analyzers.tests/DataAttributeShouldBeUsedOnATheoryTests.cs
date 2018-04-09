@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
 {
@@ -7,7 +8,7 @@ namespace Xunit.Analyzers
         readonly DiagnosticAnalyzer analyzer = new DataAttributeShouldBeUsedOnATheory();
 
         [Fact]
-        public async void DoesNotFindErrorForFactMethodWithNoDataAttributes()
+        public async Task DoesNotFindErrorForFactMethodWithNoDataAttributes()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "public class TestClass { [Xunit.Fact] public void TestMethod() { } }");
 
@@ -18,7 +19,7 @@ namespace Xunit.Analyzers
         [InlineData("InlineData")]
         [InlineData("MemberData(\"\")")]
         [InlineData("ClassData(typeof(string))")]
-        public async void DoesNotFindErrorForFactMethodWithDataAttributes(string dataAttribute)
+        public async Task DoesNotFindErrorForFactMethodWithDataAttributes(string dataAttribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [Xunit.Fact, Xunit." + dataAttribute + "] public void TestMethod() { } }");
@@ -30,7 +31,7 @@ namespace Xunit.Analyzers
         [InlineData("InlineData")]
         [InlineData("MemberData(\"\")")]
         [InlineData("ClassData(typeof(string))")]
-        public async void DoesNotFindErrorForTheoryMethodWithDataAttributes(string dataAttribute)
+        public async Task DoesNotFindErrorForTheoryMethodWithDataAttributes(string dataAttribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [Xunit.Theory, Xunit." + dataAttribute + "] public void TestMethod() { } }");
@@ -42,7 +43,7 @@ namespace Xunit.Analyzers
         [InlineData("InlineData")]
         [InlineData("MemberData(\"\")")]
         [InlineData("ClassData(typeof(string))")]
-        public async void FindsErrorForMethodsWithDataAttributesButNotFactOrTheory(string dataAttribute)
+        public async Task FindsErrorForMethodsWithDataAttributesButNotFactOrTheory(string dataAttribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [Xunit." + dataAttribute + "] public void TestMethod() { } }");

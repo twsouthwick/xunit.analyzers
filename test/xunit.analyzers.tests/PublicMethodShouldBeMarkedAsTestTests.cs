@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -9,7 +10,7 @@ namespace Xunit.Analyzers
         readonly DiagnosticAnalyzer analyzer = new PublicMethodShouldBeMarkedAsTest();
 
         [Fact]
-        public async void DoesNotFindErrorForPublicMethodInNonTestClass()
+        public async Task DoesNotFindErrorForPublicMethodInNonTestClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "public class TestClass { public void TestMethod() { } }");
 
@@ -19,7 +20,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Xunit.Fact")]
         [InlineData("Xunit.Theory")]
-        public async void DoesNotFindErrorForTestMethods(string attribute)
+        public async Task DoesNotFindErrorForTestMethods(string attribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "public class TestClass { [" + attribute + "] public void TestMethod() { } }");
 
@@ -27,7 +28,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindErrorForIDisposableDisposeMethod()
+        public async Task DoesNotFindErrorForIDisposableDisposeMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public class TestClass : System.IDisposable {
@@ -39,7 +40,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindErrorForPublicAbstractMethod()
+        public async Task DoesNotFindErrorForPublicAbstractMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public abstract class TestClass {
@@ -51,7 +52,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindErrorForPublicAbstractMethodMarkedWithFact()
+        public async Task DoesNotFindErrorForPublicAbstractMethodMarkedWithFact()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public abstract class TestClass {
@@ -62,7 +63,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindErrorForIDisposableDisposeMethodOverrideFromParentClass()
+        public async Task DoesNotFindErrorForIDisposableDisposeMethodOverrideFromParentClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public class BaseClass : System.IDisposable {
@@ -77,7 +78,7 @@ public class TestClass : BaseClass {
         }
 
         [Fact]
-        public async void DoesNotFindErrorForIDisposableDisposeMethodOverrideFromParentClassWithRepeatedInterfaceDeclaration()
+        public async Task DoesNotFindErrorForIDisposableDisposeMethodOverrideFromParentClassWithRepeatedInterfaceDeclaration()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public class BaseClass : System.IDisposable {
@@ -92,7 +93,7 @@ public class TestClass : BaseClass, System.IDisposable {
         }
 
         [Fact]
-        public async void DoesNotFindErrorForIDisposableDisposeMethodOverrideFromGrandParentClass()
+        public async Task DoesNotFindErrorForIDisposableDisposeMethodOverrideFromGrandParentClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public abstract class BaseClass : System.IDisposable {
@@ -109,7 +110,7 @@ public class TestClass : IntermediateClass {
         }
 
         [Fact]
-        public async void DoesNotFindErrorForIAsyncLifetimeMethods()
+        public async Task DoesNotFindErrorForIAsyncLifetimeMethods()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public class TestClass : Xunit.IAsyncLifetime {
@@ -128,7 +129,7 @@ public class TestClass : IntermediateClass {
         }
 
         [Fact]
-        public async void DoesNotFindErrorForPublicMethodMarkedWithAttributeWhichIsMarkedWithIgnoreXunitAnalyzersRule1013()
+        public async Task DoesNotFindErrorForPublicMethodMarkedWithAttributeWhichIsMarkedWithIgnoreXunitAnalyzersRule1013()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public class IgnoreXunitAnalyzersRule1013Attribute : System.Attribute { }
@@ -142,7 +143,7 @@ public class TestClass { [Xunit.Fact] public void TestMethod() { } [CustomTestTy
         }
 
         [Fact]
-        public async void FindsWarningForPublicMethodMarkedWithAttributeWhichInheritsFromAttributeMarkedWithIgnoreXunitAnalyzersRule1013()
+        public async Task FindsWarningForPublicMethodMarkedWithAttributeWhichInheritsFromAttributeMarkedWithIgnoreXunitAnalyzersRule1013()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"public class IgnoreXunitAnalyzersRule1013Attribute : System.Attribute { }
@@ -167,7 +168,7 @@ public class TestClass { [Xunit.Fact] public void TestMethod() { } [DerivedCusto
         [InlineData("Xunit.Fact")]
         [InlineData("Xunit.Theory")]
 
-        public async void FindsWarningForPublicMethodWithoutParametersInTestClass(string attribute)
+        public async Task FindsWarningForPublicMethodWithoutParametersInTestClass(string attribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [" + attribute + "] public void TestMethod() { } public void Method() {} }");
@@ -185,7 +186,7 @@ public class TestClass { [Xunit.Fact] public void TestMethod() { } [DerivedCusto
         [InlineData("Xunit.Fact")]
         [InlineData("Xunit.Theory")]
 
-        public async void FindsWarningForPublicMethodWithParametersInTestClass(string attribute)
+        public async Task FindsWarningForPublicMethodWithParametersInTestClass(string attribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [" + attribute + "] public void TestMethod() { } public void Method(int a) {} }");

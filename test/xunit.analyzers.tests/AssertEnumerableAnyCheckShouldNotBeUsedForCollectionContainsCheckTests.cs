@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -11,7 +12,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(BooleanMethods))]
-        public async void FindsWarning_ForLinqAnyCheck(string method)
+        public async Task FindsWarning_ForLinqAnyCheck(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;

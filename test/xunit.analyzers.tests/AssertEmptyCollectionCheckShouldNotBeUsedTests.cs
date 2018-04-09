@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -18,7 +19,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void FindsWarningForCollectionCheckWithoutAction(string collection)
+        public async Task FindsWarningForCollectionCheckWithoutAction(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -35,7 +36,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void DoesNotFindWarningForCollectionCheckWithAction(string collection)
+        public async Task DoesNotFindWarningForCollectionCheckWithAction(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 

@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -8,7 +9,7 @@ namespace Xunit.Analyzers
         readonly DiagnosticAnalyzer analyzer = new TestMethodCannotHaveOverloads();
 
         [Fact]
-        public async void FindsErrors_ForInstanceMethodOverloads_InSameInstanceClass()
+        public async Task FindsErrors_ForInstanceMethodOverloads_InSameInstanceClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { " +
@@ -24,7 +25,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrors_ForStaticMethodOverloads_InSameStaticClass()
+        public async Task FindsErrors_ForStaticMethodOverloads_InSameStaticClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public static class TestClass { " +
@@ -40,7 +41,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrors_ForInstanceMethodOverload_InDerivedClass()
+        public async Task FindsErrors_ForInstanceMethodOverload_InDerivedClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class BaseClass {" +
@@ -59,7 +60,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsError_ForStaticAndInstanceMethodOverload()
+        public async Task FindsError_ForStaticAndInstanceMethodOverload()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class BaseClass {" +
@@ -76,7 +77,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void DoesNotFindError_ForMethodOverrides()
+        public async Task DoesNotFindError_ForMethodOverrides()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class BaseClass {" +

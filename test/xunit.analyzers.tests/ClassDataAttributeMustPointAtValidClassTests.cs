@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
 {
@@ -8,7 +9,7 @@ namespace Xunit.Analyzers
         readonly DiagnosticAnalyzer analyzer = new ClassDataAttributeMustPointAtValidClass();
 
         [Fact]
-        public async void DoesNotFindErrorForFactMethod()
+        public async Task DoesNotFindErrorForFactMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, TestMethodSource,
 @"class DataClass : System.Collections.Generic.IEnumerable<object[]> {
@@ -20,7 +21,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrorForDataClassNotImplementingInterface()
+        public async Task FindsErrorForDataClassNotImplementingInterface()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, TestMethodSource,
 @"class DataClass : System.Collections.Generic.IEnumerable<object> {
@@ -37,7 +38,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrorForAbstractDataClass()
+        public async Task FindsErrorForAbstractDataClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, TestMethodSource,
 @"abstract class DataClass : System.Collections.Generic.IEnumerable<object[]> {
@@ -55,7 +56,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrorForDataClassWithImplicitPrivateConstructor()
+        public async Task FindsErrorForDataClassWithImplicitPrivateConstructor()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, TestMethodSource,
 @"class DataClass : System.Collections.Generic.IEnumerable<object[]> {
@@ -75,7 +76,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("private")]
         [InlineData("internal")]
-        public async void FindsErrorForDataClassWithExplicitNonPublicConstructor(string accessiblity)
+        public async Task FindsErrorForDataClassWithExplicitNonPublicConstructor(string accessiblity)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, TestMethodSource,
 string.Format(@"class DataClass : System.Collections.Generic.IEnumerable<object[]> {{

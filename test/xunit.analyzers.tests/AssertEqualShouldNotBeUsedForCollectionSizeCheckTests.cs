@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -44,7 +45,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void FindsWarningForEmptyCollectionSizeCheck(string collection)
+        public async Task FindsWarningForEmptyCollectionSizeCheck(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -57,7 +58,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void FindsWarningForNonEmptyCollectionSizeCheck(string collection)
+        public async Task FindsWarningForNonEmptyCollectionSizeCheck(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -70,7 +71,7 @@ class TestClass { void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void FindsWarningForSingleItemCollectionSizeCheck(string collection)
+        public async Task FindsWarningForSingleItemCollectionSizeCheck(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -82,7 +83,7 @@ class TestClass { void TestMethod() {
         }
 
         [Fact]
-        public async void FindsWarningForSymbolDeclaringTypeHasZeroArity_ImplementsICollectionOfT()
+        public async Task FindsWarningForSymbolDeclaringTypeHasZeroArity_ImplementsICollectionOfT()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, @"
 using System.Collections;
@@ -115,7 +116,7 @@ class TestClass
 
         [Theory]
         [MemberData(nameof(Collections))]
-        public async void DoesNotFindWarningForNonSingleItemCollectionSizeCheck(string collection)
+        public async Task DoesNotFindWarningForNonSingleItemCollectionSizeCheck(string collection)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -128,7 +129,7 @@ class TestClass
 
         [Theory]
         [MemberData(nameof(CollectionsWithUnsupportedSize))]
-        public async void DoesNotFindWarningForUnsupportedCollectionSizeCheck(string collection, int size)
+        public async Task DoesNotFindWarningForUnsupportedCollectionSizeCheck(string collection, int size)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -141,7 +142,7 @@ class TestClass
 
         [Theory]
         [MemberData(nameof(CollectionsWithUnsupportedSize))]
-        public async void DoesNotFindWarningForUnsupportedNonEqualCollectionSizeCheck(string collection, int size)
+        public async Task DoesNotFindWarningForUnsupportedNonEqualCollectionSizeCheck(string collection, int size)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Linq;
@@ -153,7 +154,7 @@ class TestClass
         }
 
         [Fact]
-        public async void DoesNotCrashForSymbolDeclaringTypeHasDifferentArityThanICollection_Zero()
+        public async Task DoesNotCrashForSymbolDeclaringTypeHasDifferentArityThanICollection_Zero()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Collections.Generic;
@@ -168,7 +169,7 @@ class TestClass
         }
 
         [Fact]
-        public async void DoesNotCrashForSymbolDeclaringTypeHasDifferentArityThanICollection_Two()
+        public async Task DoesNotCrashForSymbolDeclaringTypeHasDifferentArityThanICollection_Two()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"using System.Collections.Generic;
@@ -183,7 +184,7 @@ class TestClass
         }
 
         [Fact]
-        public async void DoesNotCrash_ForNonIntArguments()
+        public async Task DoesNotCrash_ForNonIntArguments()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() {

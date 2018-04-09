@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
 {
@@ -9,7 +10,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Fact")]
         [InlineData("Theory")]
-        public async void DoesNotFindErrorForMethodWithSingleAttribute(string attribute)
+        public async Task DoesNotFindErrorForMethodWithSingleAttribute(string attribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [Xunit." + attribute + "] public void TestMethod() { } }");
@@ -18,7 +19,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrorForMethodWithTheoryAndFact()
+        public async Task FindsErrorForMethodWithTheoryAndFact()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [Xunit.Fact, Xunit.Theory] public void TestMethod() { } }");
@@ -32,7 +33,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsErrorForMethodWithCustomFactAttribute()
+        public async Task FindsErrorForMethodWithCustomFactAttribute()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass { [Xunit.Fact, CustomFact] public void TestMethod() { } }",

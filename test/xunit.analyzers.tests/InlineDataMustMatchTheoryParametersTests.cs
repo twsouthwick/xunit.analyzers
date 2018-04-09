@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -14,7 +15,7 @@ namespace Xunit.Analyzers
         {
 
             [Fact]
-            public async void DoesNotFindError_WhenNoDataAttributes()
+            public async Task DoesNotFindError_WhenNoDataAttributes()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "public class TestClass { [Xunit.Fact] public void TestMethod() { } }");
 
@@ -22,7 +23,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindError_WithAttribute()
+            public async Task DoesNotFindError_WithAttribute()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Fact, Xunit.InlineData] public void TestMethod(string a) { } }");
@@ -34,7 +35,7 @@ namespace Xunit.Analyzers
         public class ForTheoryWithArgumentMatch : InlineDataMustMatchTheoryParametersTests
         {
             [Fact]
-            public async void DoesNotFindErrorFor_MethodUsingParamsArgument()
+            public async Task DoesNotFindErrorFor_MethodUsingParamsArgument()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -46,7 +47,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindErrorFor_MethodUsingNormalAndParamsArgument()
+            public async Task DoesNotFindErrorFor_MethodUsingNormalAndParamsArgument()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -58,7 +59,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindErrorFor_MethodUsingNormalAndUnusedParamsArgument()
+            public async Task DoesNotFindErrorFor_MethodUsingNormalAndUnusedParamsArgument()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -70,7 +71,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindErrorFor_UsingParameters()
+            public async Task DoesNotFindErrorFor_UsingParameters()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -82,7 +83,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindErrorFor_UsingParametersWithDefaultValues()
+            public async Task DoesNotFindErrorFor_UsingParametersWithDefaultValues()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -94,7 +95,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindErrorFor_UsingParametersWithDefaultValuesAndParamsArgument()
+            public async Task DoesNotFindErrorFor_UsingParametersWithDefaultValuesAndParamsArgument()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -106,7 +107,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindErrorFor_UsingParameterWithOptionalAttribute()
+            public async Task DoesNotFindErrorFor_UsingParameterWithOptionalAttribute()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -118,7 +119,7 @@ namespace Xunit.Analyzers
             }
             
             [Fact]
-            public async void DoesNotFindErrorFor_UsingMultipleParametersWithOptionalAttributes()
+            public async Task DoesNotFindErrorFor_UsingMultipleParametersWithOptionalAttributes()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -134,7 +135,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindError_UsingExplicitArray()
+            public async Task DoesNotFindError_UsingExplicitArray()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -146,7 +147,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindError_UsingExplicitNamedArray()
+            public async Task DoesNotFindError_UsingExplicitNamedArray()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -158,7 +159,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindError_UsingImplicitArray()
+            public async Task DoesNotFindError_UsingImplicitArray()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -170,7 +171,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindError_UsingImplicitNamedArray()
+            public async Task DoesNotFindError_UsingImplicitNamedArray()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -182,7 +183,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindError_EmptyArray()
+            public async Task DoesNotFindError_EmptyArray()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -197,7 +198,7 @@ namespace Xunit.Analyzers
         public class ForAttributeWithTooFewArguments : InlineDataMustMatchTheoryParametersTests
         {
             [Fact]
-            public async void FindsError()
+            public async Task FindsError()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(1)] public void TestMethod(int a, int b, string c) { } }");
@@ -214,7 +215,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("Xunit.InlineData()")]
             [InlineData("Xunit.InlineData")]
-            public async void FindsError_ForAttributeWithNoArguments(string attribute)
+            public async Task FindsError_ForAttributeWithNoArguments(string attribute)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass {" +
@@ -232,7 +233,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void FindsError_UsingParams()
+            public async Task FindsError_UsingParams()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(1)] public void TestMethod(int a, int b, params string[] value) { } }");
@@ -250,7 +251,7 @@ namespace Xunit.Analyzers
         public class ForAttributeWithTooManyArguments : InlineDataMustMatchTheoryParametersTests
         {
             [Fact]
-            public async void FindsError()
+            public async Task FindsError()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(1, 2, \"abc\")] public void TestMethod(int a) { } }");
@@ -295,7 +296,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("int")]
             [InlineData("params int[]")]
-            public async void FindsWarning_ForSingleNullValue(string type)
+            public async Task FindsWarning_ForSingleNullValue(string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(null)] public void TestMethod(" + type + " a) { } }");
@@ -311,7 +312,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [MemberData(nameof(ValueTypes))]
-            public async void FindsWarning_ForValueTypeParameter(string type)
+            public async Task FindsWarning_ForValueTypeParameter(string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(1, null, null)] public void TestMethod(int a, " + type + " b, params " + type + "[] c) { } }");
@@ -333,7 +334,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [MemberData(nameof(ValueTypes))]
-            public async void DoesNotFindWarning_ForNullableValueType(string type)
+            public async Task DoesNotFindWarning_ForNullableValueType(string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(1, null)] public void TestMethod(int a, " + type + "? b) { } }");
@@ -345,7 +346,7 @@ namespace Xunit.Analyzers
             [InlineData("object")]
             [InlineData("string")]
             [InlineData("System.Exception")]
-            public async void DoesNotFindWarning_ForReferenceParameterType(string type)
+            public async Task DoesNotFindWarning_ForReferenceParameterType(string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(1, null)] public void TestMethod(int a, " + type + " b) { } }");
@@ -368,7 +369,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [TupleMemberData(nameof(NumericValuesAndNumericTypes))]
-            public async void DoesNotFindError_FromAnyOtherNumericType(string value, string type)
+            public async Task DoesNotFindError_FromAnyOtherNumericType(string value, string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(" + type + " a) { } }");
@@ -378,7 +379,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [TupleMemberData(nameof(NumericValuesAndNumericTypes))]
-            public async void DoesNotFindError_FromAnyOtherNumericType_ToNullable(string value, string type)
+            public async Task DoesNotFindError_FromAnyOtherNumericType_ToNullable(string value, string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(" + type + "? a) { } }");
@@ -388,7 +389,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [TupleMemberData(nameof(BoolValuesAndNumericTypes))]
-            public async void FindsError_ForBoolArgument(string value, string type)
+            public async Task FindsError_ForBoolArgument(string value, string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(" + type + " a) { } }");
@@ -403,7 +404,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [TupleMemberData(nameof(NumericTypes))]
-            public async void DoesNotFindError_ForCharArgument(string type)
+            public async Task DoesNotFindError_ForCharArgument(string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData('a')] public void TestMethod(" + type + " a) { } }");
@@ -413,7 +414,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [TupleMemberData(nameof(NumericTypes))]
-            public async void FindsError_ForEnumArgument(string type)
+            public async Task FindsError_ForEnumArgument(string type)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(System.StringComparison.InvariantCulture)] public void TestMethod(" + type + " a) { } }");
@@ -432,7 +433,7 @@ namespace Xunit.Analyzers
         {
             [Theory]
             [TupleMemberData(nameof(BoolValues))]
-            public async void DoesNotFindError_FromBoolType(string value)
+            public async Task DoesNotFindError_FromBoolType(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(bool a) { } }");
@@ -442,7 +443,7 @@ namespace Xunit.Analyzers
 
             [Theory]
             [TupleMemberData(nameof(BoolValues))]
-            public async void DoesNotFindError_FromBoolType_ToNullable(string value)
+            public async Task DoesNotFindError_FromBoolType_ToNullable(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(bool? a) { } }");
@@ -456,7 +457,7 @@ namespace Xunit.Analyzers
             [InlineData("'a'")]
             [InlineData("\"abc\"")]
             [InlineData("typeof(string)")]
-            public async void FindsError_ForOtherArguments(string value)
+            public async Task FindsError_ForOtherArguments(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(bool a) { } }");
@@ -475,7 +476,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("'a'")]
             [TupleMemberData(nameof(IntegerValues))]
-            public async void DoesNotFindError_FromCharOrIntegerType(string value)
+            public async Task DoesNotFindError_FromCharOrIntegerType(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(char a) { } }");
@@ -486,7 +487,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("'a'")]
             [TupleMemberData(nameof(IntegerValues))]
-            public async void DoesNotFindError_FromCharType_ToNullable(string value)
+            public async Task DoesNotFindError_FromCharType_ToNullable(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(char? a) { } }");
@@ -500,7 +501,7 @@ namespace Xunit.Analyzers
             [TupleMemberData(nameof(BoolValues))]
             [InlineData("\"abc\"")]
             [InlineData("typeof(string)")]
-            public async void FindsError_ForOtherArguments(string value)
+            public async Task FindsError_ForOtherArguments(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(char a) { } }");
@@ -517,7 +518,7 @@ namespace Xunit.Analyzers
         public class ForConversionToEnum : InlineDataMustMatchTheoryParametersTests
         {
             [Fact]
-            public async void DoesNotFindError_FromEnum()
+            public async Task DoesNotFindError_FromEnum()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(System.StringComparison.Ordinal)] public void TestMethod(System.StringComparison a) { } }");
@@ -526,7 +527,7 @@ namespace Xunit.Analyzers
             }
 
             [Fact]
-            public async void DoesNotFindError_FromEnum_ToNullable()
+            public async Task DoesNotFindError_FromEnum_ToNullable()
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(System.StringComparison.Ordinal)] public void TestMethod(System.StringComparison? a) { } }");
@@ -540,7 +541,7 @@ namespace Xunit.Analyzers
             [InlineData("'a'")]
             [InlineData("\"abc\"")]
             [InlineData("typeof(string)")]
-            public async void FindsError_ForOtherArguments(string value)
+            public async Task FindsError_ForOtherArguments(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(System.StringComparison a) { } }");
@@ -559,7 +560,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("typeof(string)")]
             [InlineData("null")]
-            public async void DoesNotFindError_FromType(string value)
+            public async Task DoesNotFindError_FromType(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(System.Type a) { } }");
@@ -570,7 +571,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("typeof(string)")]
             [InlineData("null")]
-            public async void DoesNotFindError_FromType_UsingParams(string value)
+            public async Task DoesNotFindError_FromType_UsingParams(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(params System.Type[] a) { } }");
@@ -584,7 +585,7 @@ namespace Xunit.Analyzers
             [InlineData("'a'")]
             [InlineData("\"abc\"")]
             [InlineData("System.StringComparison.Ordinal")]
-            public async void FindsError_ForOtherArguments(string value)
+            public async Task FindsError_ForOtherArguments(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(System.Type a) { } }");
@@ -603,7 +604,7 @@ namespace Xunit.Analyzers
             [InlineData("'a'")]
             [InlineData("\"abc\"")]
             [InlineData("System.StringComparison.Ordinal")]
-            public async void FindsError_ForOtherArguments_UsingParams(string value)
+            public async Task FindsError_ForOtherArguments_UsingParams(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(params System.Type[] a) { } }");
@@ -622,7 +623,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("\"abc\"")]
             [InlineData("null")]
-            public async void DoesNotFindError_FromBoolType(string value)
+            public async Task DoesNotFindError_FromBoolType(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(string a) { } }");
@@ -636,7 +637,7 @@ namespace Xunit.Analyzers
             [InlineData("System.StringComparison.Ordinal")]
             [InlineData("'a'")]
             [InlineData("typeof(string)")]
-            public async void FindsError_ForOtherArguments(string value)
+            public async Task FindsError_ForOtherArguments(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(string a) { } }");
@@ -656,7 +657,7 @@ namespace Xunit.Analyzers
             [TupleMemberData(nameof(NumericValues))]
             [InlineData("System.StringComparison.Ordinal")]
             [InlineData("null")]
-            public async void DoesNotFindError_FromTypesImplementingInterface(string value)
+            public async Task DoesNotFindError_FromTypesImplementingInterface(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(System.IFormattable a) { } }");
@@ -669,7 +670,7 @@ namespace Xunit.Analyzers
             [InlineData("'a'")]
             [InlineData("\"abc\"")]
             [InlineData("typeof(string)")]
-            public async void FindsError_ForOtherArguments(string value)
+            public async Task FindsError_ForOtherArguments(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(System.IFormattable a) { } }");
@@ -693,7 +694,7 @@ namespace Xunit.Analyzers
             [InlineData("\"abc\"")]
             [InlineData("null")]
             [InlineData("typeof(string)")]
-            public async void DoesNotFindError_FromAnyValue(string value)
+            public async Task DoesNotFindError_FromAnyValue(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(object a) { } }");
@@ -709,7 +710,7 @@ namespace Xunit.Analyzers
             [InlineData("\"abc\"")]
             [InlineData("null")]
             [InlineData("typeof(string)")]
-            public async void DoesNotFindError_FromAnyValues_UsingParams(string value)
+            public async Task DoesNotFindError_FromAnyValues_UsingParams(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                    "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod(params object[] a) { } }");
@@ -728,7 +729,7 @@ namespace Xunit.Analyzers
             [InlineData("\"abc\"")]
             [InlineData("null")]
             [InlineData("typeof(string)")]
-            public async void DoesNotFindError_FromAnyValue_WithNoConstraint(string value)
+            public async Task DoesNotFindError_FromAnyValue_WithNoConstraint(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod<T>(T a) { } }");
@@ -741,7 +742,7 @@ namespace Xunit.Analyzers
             [TupleMemberData(nameof(NumericValues))]
             [InlineData("System.StringComparison.Ordinal")]
             [InlineData("'a'")]
-            public async void DoesNotFindError_FromAnyValueType_WithStructConstraint(string value)
+            public async Task DoesNotFindError_FromAnyValueType_WithStructConstraint(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod<T>(T a) where T: struct { } }");
@@ -752,7 +753,7 @@ namespace Xunit.Analyzers
             [Theory]
             [InlineData("\"abc\"")]
             [InlineData("typeof(string)")]
-            public async void FindsError_FromAnyReferenceType_WithStructConstraint(string value)
+            public async Task FindsError_FromAnyReferenceType_WithStructConstraint(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod<T>(T a) where T: struct { } }");
@@ -769,7 +770,7 @@ namespace Xunit.Analyzers
             [InlineData("\"abc\"")]
             [InlineData("typeof(string)")]
             [InlineData("null")]
-            public async void DoesNotFindError_FromAnyReferenceType_WithClassConstraint(string value)
+            public async Task DoesNotFindError_FromAnyReferenceType_WithClassConstraint(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod<T>(T a) where T: class { } }");
@@ -782,7 +783,7 @@ namespace Xunit.Analyzers
             [TupleMemberData(nameof(NumericValues))]
             [InlineData("System.StringComparison.Ordinal")]
             [InlineData("'a'")]
-            public async void FindsError_FromAnyValueType_WithClassConstraint(string value)
+            public async Task FindsError_FromAnyValueType_WithClassConstraint(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod<T>(T a) where T: class { } }");
@@ -799,7 +800,7 @@ namespace Xunit.Analyzers
             [InlineData("null")]
             [InlineData("System.StringComparison.Ordinal")]
             [TupleMemberData(nameof(NumericValues))]
-            public async void DoesNotFindError_FromAnyMatchingType_WithTypeConstraint(string value)
+            public async Task DoesNotFindError_FromAnyMatchingType_WithTypeConstraint(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod<T>(T a) where T: System.IConvertible, System.IFormattable { } }");
@@ -813,7 +814,7 @@ namespace Xunit.Analyzers
             [InlineData("'a'")]
             [InlineData("\"abc\"")]
             [TupleMemberData(nameof(BoolValues))]
-            public async void FindsError_FromNonMatchingType_WithTypeConstraint(string value)
+            public async Task FindsError_FromNonMatchingType_WithTypeConstraint(string value)
             {
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                     "public class TestClass { [Xunit.Theory, Xunit.InlineData(" + value + ")] public void TestMethod<T>(T a) where T: System.IConvertible, System.IFormattable { } }");
@@ -854,7 +855,7 @@ namespace Xunit.Analyzers
             [TupleMemberData(nameof(ValueTypedArgumentsCombinedWithDateTimeLikeTypes))]
             [InlineData("MyConstInt", "System.DateTime")]
             [InlineData("MyConstInt", "System.DateTimeOffset")]
-            public async void FindsError_FromNonString(string inlineData, string parameterType)
+            public async Task FindsError_FromNonString(string inlineData, string parameterType)
             {
                 var source = @"
 public class TestClass 
@@ -879,7 +880,7 @@ public class TestClass
 
             [Theory]
             [TupleMemberData(nameof(DateTimeValueStringsCombinedWithDateTimeType))]
-            public async void DoesNotFindError_ForDateTime_FromString(string inlineData, string parameterType)
+            public async Task DoesNotFindError_ForDateTime_FromString(string inlineData, string parameterType)
             {
                 var source = CreateSourceWithStringConst(inlineData, parameterType);
                 var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, source);
@@ -889,7 +890,7 @@ public class TestClass
 
             [Theory]
             [TupleMemberData(nameof(DateTimeValueStringsCombinedWithDateTimeOffsetType))]
-            public async void FindsError_ForDateTimeOffsetAndAnalyzerLessThan_2_4_0v_FromString(string inlineData, string parameterType)
+            public async Task FindsError_ForDateTimeOffsetAndAnalyzerLessThan_2_4_0v_FromString(string inlineData, string parameterType)
             {
                 var source = CreateSourceWithStringConst(inlineData, parameterType);
                 var diagnosticAnalyzer = new InlineDataMustMatchTheoryParameters("2.3.1");
@@ -906,7 +907,7 @@ public class TestClass
 
             [Theory]
             [TupleMemberData(nameof(DateTimeValueStringsCombinedWithDateTimeOffsetType))]
-            public async void DoesNotFindError_ForDateTimeOffsetAndForAnalyzerGreaterThanEqual_2_4_0v_FromString(string inlineData, string parameterType)
+            public async Task DoesNotFindError_ForDateTimeOffsetAndForAnalyzerGreaterThanEqual_2_4_0v_FromString(string inlineData, string parameterType)
             {
                 var source = CreateSourceWithStringConst(inlineData, parameterType);
                 var diagnosticAnalyzer = new InlineDataMustMatchTheoryParameters("2.4.0");
@@ -945,7 +946,7 @@ public class TestClass
             [Theory]
             [TupleMemberData(nameof(ValueTypedValues))]
             [InlineData("MyConstInt")]
-            public async void FindsError_FromNonString(string inlineData)
+            public async Task FindsError_FromNonString(string inlineData)
             {
                 var source = @"
 public class TestClass 
@@ -970,7 +971,7 @@ public class TestClass
 
             [Theory]
             [TupleMemberData(nameof(AcceptableGuidStrings))]
-            public async void FindsError__ForAnalyzerLessThan_2_4_0v_FromString(string inlineData)
+            public async Task FindsError__ForAnalyzerLessThan_2_4_0v_FromString(string inlineData)
             {
                 var source = CreateSource(inlineData);
 
@@ -987,7 +988,7 @@ public class TestClass
 
             [Theory]
             [TupleMemberData(nameof(AcceptableGuidStrings))]
-            public async void DoesNotFindError_ForAnalyzerGreaterThanEqual_2_4_0v_FromString(string inlineData)
+            public async Task DoesNotFindError_ForAnalyzerGreaterThanEqual_2_4_0v_FromString(string inlineData)
             {
                 var source = CreateSource(inlineData);
 

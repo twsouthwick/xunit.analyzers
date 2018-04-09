@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -27,7 +28,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void FindsWarning_ParameterNotReferenced()
+        public async Task FindsWarning_ParameterNotReferenced()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using Xunit;
@@ -43,7 +44,7 @@ class TestClass
         }
 
         [Fact]
-        public async void FindsWarning_ParameterUnread()
+        public async Task FindsWarning_ParameterUnread()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using System;
@@ -64,7 +65,7 @@ class TestClass
         }
 
         [Fact]
-        public async void FindsWarning_MultipleUnreadParameters()
+        public async Task FindsWarning_MultipleUnreadParameters()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using Xunit;
@@ -82,7 +83,7 @@ class TestClass
         }
 
         [Fact]
-        public async void FindsWarning_SomeUnreadParameters()
+        public async Task FindsWarning_SomeUnreadParameters()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using System;
@@ -104,7 +105,7 @@ class TestClass
         }
 
         [Fact]
-        public async void FindsWarning_ExpressionBodiedMethod()
+        public async Task FindsWarning_ExpressionBodiedMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using Xunit;
@@ -120,7 +121,7 @@ class TestClass
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ParameterRead()
+        public async Task DoesNotFindWarning_ParameterRead()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using System;
@@ -139,7 +140,7 @@ class TestClass
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ExpressionBodiedMethod()
+        public async Task DoesNotFindWarning_ExpressionBodiedMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using Xunit;
@@ -154,7 +155,7 @@ class TestClass
         }
 
         [Fact]
-        public async void DoesNotCrash_MethodWithoutBody()
+        public async Task DoesNotCrash_MethodWithoutBody()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(Analyzer, @"
 using Xunit;

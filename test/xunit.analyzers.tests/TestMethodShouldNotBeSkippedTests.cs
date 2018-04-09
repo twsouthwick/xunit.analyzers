@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -10,7 +11,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Fact")]
         [InlineData("Theory")]
-        public async void DoesNotFindErrorForNotSkippedTest(string attribute)
+        public async Task DoesNotFindErrorForNotSkippedTest(string attribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "public class TestClass { [Xunit." + attribute + "] public void TestMethod() { } }");
 
@@ -20,7 +21,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Fact")]
         [InlineData("Theory")]
-        public async void FindsErrorForSkippedTests(string attribute)
+        public async Task FindsErrorForSkippedTests(string attribute)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, "class TestClass { [Xunit." + attribute + "(Skip=\"Lazy\")] public void TestMethod() { } }");
 

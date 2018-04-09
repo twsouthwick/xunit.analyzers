@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -20,7 +21,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async void DoesNotFindWarningForStringEqualityCheckWithoutGenericType(string expected, string value)
+        public async Task DoesNotFindWarningForStringEqualityCheckWithoutGenericType(string expected, string value)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -31,7 +32,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async void FindsWarningForStringEqualityCheckWithGenericType(string expected, string value)
+        public async Task FindsWarningForStringEqualityCheckWithGenericType(string expected, string value)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -48,7 +49,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async void FindsWarningForStrictStringEqualityCheck(string expected, string value)
+        public async Task FindsWarningForStrictStringEqualityCheck(string expected, string value)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 
@@ -65,7 +66,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async void FindsWarningForStrictStringEqualityCheckWithGenericType(string expected, string value)
+        public async Task FindsWarningForStrictStringEqualityCheckWithGenericType(string expected, string value)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { void TestMethod() { 

@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -10,7 +11,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Same")]
         [InlineData("NotSame")]
-        public async void FindsWarningForTwoValueParameters(string method)
+        public async Task FindsWarningForTwoValueParameters(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
 @"class TestClass { void TestMethod() {
@@ -29,7 +30,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Same")]
         [InlineData("NotSame")]
-        public async void FindsWarningForFirstValueParameters(string method)
+        public async Task FindsWarningForFirstValueParameters(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
 @"class TestClass { void TestMethod() {
@@ -48,7 +49,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Same")]
         [InlineData("NotSame")]
-        public async void FindsWarningForSecondValueParameters(string method)
+        public async Task FindsWarningForSecondValueParameters(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
 @"class TestClass { void TestMethod() {

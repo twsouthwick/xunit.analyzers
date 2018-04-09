@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -11,7 +12,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsWarning_ForValueType(string method)
+        public async Task FindsWarning_ForValueType(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -29,7 +30,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForNullableValueType(string method)
+        public async Task DoesNotFindWarning_ForNullableValueType(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -42,7 +43,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForNullableReferenceType(string method)
+        public async Task DoesNotFindWarning_ForNullableReferenceType(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -55,7 +56,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForClassConstrainedGenericTypes(string method)
+        public async Task DoesNotFindWarning_ForClassConstrainedGenericTypes(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"
@@ -71,7 +72,7 @@ class Class<T> where T : class
         
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForInterfaceConstrainedGenericTypes(string method)
+        public async Task DoesNotFindWarning_ForInterfaceConstrainedGenericTypes(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"
@@ -92,7 +93,7 @@ class Class<T> where T : IDo
         
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForUnconstrainedGenericTypes(string method)
+        public async Task DoesNotFindWarning_ForUnconstrainedGenericTypes(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"

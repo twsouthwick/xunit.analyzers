@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -10,7 +11,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Equals")]
         [InlineData("ReferenceEquals")]
-        public async void FindsHiddenDiagnosticWhenProhibitedMethodIsUsed(string method)
+        public async Task FindsHiddenDiagnosticWhenProhibitedMethodIsUsed(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
 @"class TestClass { void TestMethod() {

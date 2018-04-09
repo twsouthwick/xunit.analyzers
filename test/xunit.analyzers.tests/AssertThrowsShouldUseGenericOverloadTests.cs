@@ -52,7 +52,7 @@ void TestMethod() {
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForThrowsCheck_WithExceptionTypeArgument_OnThrowingMethod(string method)
+        public async Task DoesNotFindWarning_ForThrowsCheck_WithExceptionTypeArgument_OnThrowingMethod(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
                 @"class TestClass {
@@ -69,7 +69,7 @@ async System.Threading.Tasks.Task TestMethod() {
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForThrowsCheck_WithExceptionTypeArgument_OnThrowingLambda(string method)
+        public async Task DoesNotFindWarning_ForThrowsCheck_WithExceptionTypeArgument_OnThrowingLambda(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
                 @"class TestClass { async System.Threading.Tasks.Task TestMethod() {

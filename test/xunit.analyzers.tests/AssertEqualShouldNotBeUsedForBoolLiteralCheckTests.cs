@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -22,7 +23,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void FindsWarning_ForFirstBoolLiteral(string method)
+        public async Task FindsWarning_ForFirstBoolLiteral(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -36,7 +37,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("Equal")]
         [InlineData("NotEqual")]
-        public async void FindsWarning_ForFirstBoolLiteral_WithCustomComparer(string method)
+        public async Task FindsWarning_ForFirstBoolLiteral_WithCustomComparer(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -49,7 +50,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForFirstBoolLiteral_ObjectOverload(string method)
+        public async Task DoesNotFindWarning_ForFirstBoolLiteral_ObjectOverload(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -62,7 +63,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForOtherLiteral(string method)
+        public async Task DoesNotFindWarning_ForOtherLiteral(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -75,7 +76,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(Methods))]
-        public async void DoesNotFindWarning_ForSecondBoolLiteral(string method)
+        public async Task DoesNotFindWarning_ForSecondBoolLiteral(string method)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {

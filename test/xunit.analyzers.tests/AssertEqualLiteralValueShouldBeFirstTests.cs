@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -8,7 +9,7 @@ namespace Xunit.Analyzers
         readonly DiagnosticAnalyzer analyzer = new AssertEqualLiteralValueShouldBeFirst();
 
         [Fact]
-        public async void DoesNotFindWarningWhenConstantOrLiteralUsedForBothArguments()
+        public async Task DoesNotFindWarningWhenConstantOrLiteralUsedForBothArguments()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() {
@@ -33,7 +34,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(TypesAndValues))]
-        public async void DoesNotFindWarningForExpectedConstantOrLiteralValueAsFirstArgument(string type, string value)
+        public async Task DoesNotFindWarningForExpectedConstantOrLiteralValueAsFirstArgument(string type, string value)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() { 
@@ -45,7 +46,7 @@ namespace Xunit.Analyzers
 
         [Theory]
         [MemberData(nameof(TypesAndValues))]
-        public async void FindsWarningForExpectedConstantOrLiteralValueAsSecondArgument(string type, string value)
+        public async Task FindsWarningForExpectedConstantOrLiteralValueAsSecondArgument(string type, string value)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
 @"class TestClass { void TestMethod() { 

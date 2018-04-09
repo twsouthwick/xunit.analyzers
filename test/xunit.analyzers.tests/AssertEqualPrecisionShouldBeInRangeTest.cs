@@ -17,7 +17,7 @@ namespace Xunit.Analyzers
             [InlineData(8)]
             [InlineData(14)]
             [InlineData(15)]
-            public async void DoesNotFindError_ForDoubleArgumentWithPrecisionProvidedInRange(int precision)
+            public async Task DoesNotFindError_ForDoubleArgumentWithPrecisionProvidedInRange(int precision)
             {
                 var diagnostics = await AnalyzeTestMethod(
                     "double num = 0.133d;" +
@@ -33,7 +33,7 @@ namespace Xunit.Analyzers
             [InlineData(16)]
             [InlineData(17000)]
             [InlineData(int.MaxValue)]
-            public async void FindsError_ForDoubleArgumentWithPrecisionProvidedOutOfRange(int precision)
+            public async Task FindsError_ForDoubleArgumentWithPrecisionProvidedOutOfRange(int precision)
             {
                 var diagnostics = await AnalyzeTestMethod(
                     "double num = 0.133d;" +
@@ -53,7 +53,7 @@ namespace Xunit.Analyzers
             [InlineData(14)]
             [InlineData(27)]
             [InlineData(28)]
-            public async void DoesNotFindError_ForDecimalArgumentWithPrecisionProvidedInRange(int precision)
+            public async Task DoesNotFindError_ForDecimalArgumentWithPrecisionProvidedInRange(int precision)
             {
                 var diagnostics = await AnalyzeTestMethod(
                     "decimal num = 0.133m;" +
@@ -69,7 +69,7 @@ namespace Xunit.Analyzers
             [InlineData(29)]
             [InlineData(30000)]
             [InlineData(int.MaxValue)]
-            public async void FindsError_ForDecimalArgumentWithPrecisionProvidedOutOfRange(int precision)
+            public async Task FindsError_ForDecimalArgumentWithPrecisionProvidedOutOfRange(int precision)
             {
                 var diagnostics = await AnalyzeTestMethod(
                     "decimal num = 0.133m;" +

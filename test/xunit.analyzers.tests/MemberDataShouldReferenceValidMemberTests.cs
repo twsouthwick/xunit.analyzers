@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.Diagnostics;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using System.Threading.Tasks;
 
 namespace Xunit.Analyzers
 {
@@ -13,7 +14,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
 ";
 
         [Fact]
-        public async void DoesNotFindError_ForNameofOnSameClass()
+        public async Task DoesNotFindError_ForNameofOnSameClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 sharedCode,
@@ -23,7 +24,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void DoesNotFindError_ForNameofOnOtherClass()
+        public async Task DoesNotFindError_ForNameofOnOtherClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 sharedCode,
@@ -33,7 +34,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForStringReferenceOnSameClass()
+        public async Task FindsError_ForStringReferenceOnSameClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 sharedCode,
@@ -48,7 +49,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForStringReferenceOnOtherClass()
+        public async Task FindsError_ForStringReferenceOnOtherClass()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 sharedCode,
@@ -63,7 +64,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForInvalidNameString()
+        public async Task FindsError_ForInvalidNameString()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -80,7 +81,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForInvalidNameString_UsingMemberType()
+        public async Task FindsError_ForInvalidNameString_UsingMemberType()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -97,7 +98,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForInvalidNameString_UsingMemberTypeWithOtherType()
+        public async Task FindsError_ForInvalidNameString_UsingMemberTypeWithOtherType()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class OtherClass {}",
@@ -115,7 +116,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForValidNameofExpression_UsingMemberTypeSpecifyingOtherType()
+        public async Task FindsError_ForValidNameofExpression_UsingMemberTypeSpecifyingOtherType()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class OtherClass {}",
@@ -138,7 +139,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("protected")]
         [InlineData("internal")]
         [InlineData("protected internal")]
-        public async void FindsError_ForNonPublicMember(string accessModifier)
+        public async Task FindsError_ForNonPublicMember(string accessModifier)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -156,7 +157,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void DoesNotFindError_ForPublicMember()
+        public async Task DoesNotFindError_ForPublicMember()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -175,7 +176,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("nameof(TestClass.Data)")]
         [InlineData("OtherClass.Data")]
         [InlineData("nameof(OtherClass.Data)")]
-        public async void FindsError_ForNameExpressions(string dataNameExpression)
+        public async Task FindsError_ForNameExpressions(string dataNameExpression)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public static class OtherClass { public const string Data = \"Data\"; }",
@@ -196,7 +197,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForInstanceMember()
+        public async Task FindsError_ForInstanceMember()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -214,7 +215,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void DoesNotFindError_ForStaticMember()
+        public async Task DoesNotFindError_ForStaticMember()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -229,7 +230,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("public delegate System.Collections.Generic.IEnumerable<object[]> Data();")]
         [InlineData("public static class Data { }")]
         [InlineData("public static event System.EventHandler Data;")]
-        public async void FindsError_ForInvalidMemberKind(string member)
+        public async Task FindsError_ForInvalidMemberKind(string member)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -250,7 +251,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("public static System.Collections.Generic.IEnumerable<object[]> Data;")]
         [InlineData("public static System.Collections.Generic.IEnumerable<object[]> Data { get; set; }")]
         [InlineData("public static System.Collections.Generic.IEnumerable<object[]> Data() { return null; }")]
-        public async void DoesNotFindError_ForValidMemberKind(string member)
+        public async Task DoesNotFindError_ForValidMemberKind(string member)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -267,7 +268,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("object")]
         [InlineData("System.Tuple<string, int>")]
         [InlineData("System.Tuple<string, int>[]")]
-        public async void FindsError_ForInvalidMemberType(string memberType)
+        public async Task FindsError_ForInvalidMemberType(string memberType)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -288,7 +289,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("System.Collections.Generic.IEnumerable<object[]>")]
         [InlineData("System.Collections.Generic.List<object[]>")]
         [InlineData("Xunit.TheoryData<int>")]
-        public async void DoesNotFindError_ForCompatibleMemberType(string memberType)
+        public async Task DoesNotFindError_ForCompatibleMemberType(string memberType)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -300,7 +301,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void FindsError_ForMemberPropertyWithoutGetter()
+        public async Task FindsError_ForMemberPropertyWithoutGetter()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -321,7 +322,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("'a', 123")]
         [InlineData("new object[] { 'a', 123 }")]
         [InlineData("parameters: new object[] { 'a', 123 }")]
-        public async void FindsWarning_ForMemberDataParametersForFieldMember(string paramsArgument)
+        public async Task FindsWarning_ForMemberDataParametersForFieldMember(string paramsArgument)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -342,7 +343,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         [InlineData("'a', 123")]
         [InlineData("new object[] { 'a', 123 }")]
         [InlineData("parameters: new object[] { 'a', 123 }")]
-        public async void FindsWarning_ForMemberDataParametersForPropertyMember(string paramsArgument)
+        public async Task FindsWarning_ForMemberDataParametersForPropertyMember(string paramsArgument)
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +
@@ -360,7 +361,7 @@ public class OtherClass { public static System.Collections.Generic.IEnumerable<o
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForMemberDataAttributeWithNamedParameter()
+        public async Task DoesNotFindWarning_ForMemberDataAttributeWithNamedParameter()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 "public class TestClass {" +

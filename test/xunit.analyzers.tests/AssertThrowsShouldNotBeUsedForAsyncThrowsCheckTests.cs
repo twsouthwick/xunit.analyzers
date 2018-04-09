@@ -221,7 +221,7 @@ void TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsCheck_WithExceptionParameter_OnNonAsyncThrowingMethod()
+        public async Task DoesNotFindWarning_ForThrowsCheck_WithExceptionParameter_OnNonAsyncThrowingMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
                 @"class TestClass { 
@@ -237,7 +237,7 @@ void TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsCheck_WithExceptionParameter_OnNonAsyncThrowingLamba()
+        public async Task DoesNotFindWarning_ForThrowsCheck_WithExceptionParameter_OnNonAsyncThrowingLamba()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer, CompilationReporting.IgnoreErrors,
                 @"class TestClass { void TestMethod() {
@@ -249,7 +249,7 @@ void TestMethod() {
 
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionParameter_OnThrowingMethod()
+        public async Task DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionParameter_OnThrowingMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { 
@@ -265,7 +265,7 @@ async System.Threading.Tasks.Task TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionParameter_OnThrowingLambda()
+        public async Task DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionParameter_OnThrowingLambda()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { async System.Threading.Tasks.Task TestMethod() {
@@ -276,7 +276,7 @@ async System.Threading.Tasks.Task TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionTypeArgument_OnThrowingMethod()
+        public async Task DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionTypeArgument_OnThrowingMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass {
@@ -292,7 +292,7 @@ async System.Threading.Tasks.Task TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionTypeArgument_OnThrowingLambda()
+        public async Task DoesNotFindWarning_ForThrowsAsyncCheck_WithExceptionTypeArgument_OnThrowingLambda()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { async System.Threading.Tasks.Task TestMethod() {
@@ -303,7 +303,7 @@ async System.Threading.Tasks.Task TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsAnyAsyncCheck_WithExceptionTypeArgument_OnThrowingMethod()
+        public async Task DoesNotFindWarning_ForThrowsAnyAsyncCheck_WithExceptionTypeArgument_OnThrowingMethod()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass {
@@ -319,7 +319,7 @@ async System.Threading.Tasks.Task TestMethod() {
         }
 
         [Fact]
-        public async void DoesNotFindWarning_ForThrowsAnyAsyncCheck_WithExceptionTypeArgument_OnThrowingLambda()
+        public async Task DoesNotFindWarning_ForThrowsAnyAsyncCheck_WithExceptionTypeArgument_OnThrowingLambda()
         {
             var diagnostics = await CodeAnalyzerHelper.GetDiagnosticsAsync(analyzer,
                 @"class TestClass { async System.Threading.Tasks.Task TestMethod() {

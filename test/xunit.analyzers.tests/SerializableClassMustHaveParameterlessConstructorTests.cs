@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Diagnostics;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
 {
@@ -21,7 +22,7 @@ public class Foo : {0}
 
         [Theory]
         [MemberData(nameof(Interfaces))]
-        public async void NoConstructors_ReturnsError(string @interface)
+        public async Task NoConstructors_ReturnsError(string @interface)
         {
             var code = string.Format(Template, @interface, "");
 
@@ -38,7 +39,7 @@ public class Foo : {0}
 
         [Theory]
         [MemberData(nameof(Interfaces))]
-        public async void WrongConstructor_ReturnsError(string @interface)
+        public async Task WrongConstructor_ReturnsError(string @interface)
         {
             var code = string.Format(Template, @interface, "public Foo(int x) { }");
 
@@ -55,7 +56,7 @@ public class Foo : {0}
 
         [Theory]
         [MemberData(nameof(Interfaces))]
-        public async void NonPublicConstructor_ReturnsError(string @interface)
+        public async Task NonPublicConstructor_ReturnsError(string @interface)
         {
             var code = string.Format(Template, @interface, "protected Foo() { }");
 
@@ -72,7 +73,7 @@ public class Foo : {0}
 
         [Theory]
         [MemberData(nameof(Interfaces))]
-        public async void PublicParameterlessConstructor_NoDiagnostics(string @interface)
+        public async Task PublicParameterlessConstructor_NoDiagnostics(string @interface)
         {
             var code = string.Format(Template, @interface, "public Foo() { }");
 

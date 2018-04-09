@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CodeFixes;
+﻿using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Xunit.Analyzers
@@ -11,7 +12,7 @@ namespace Xunit.Analyzers
         [Theory]
         [InlineData("")]
         [InlineData("internal")]
-        public async void MakesClassPublic(string nonPublicAccessModifier)
+        public async Task MakesClassPublic(string nonPublicAccessModifier)
         {
             var source = $"{nonPublicAccessModifier} class TestClass {{ [Xunit.Fact] public void TestMethod() {{ }} }}";
 
@@ -23,7 +24,7 @@ namespace Xunit.Analyzers
         }
 
         [Fact]
-        public async void ForPartialClassDeclarations_MakesSingleDeclarationPublic()
+        public async Task ForPartialClassDeclarations_MakesSingleDeclarationPublic()
         {
             var source = @"
 partial class TestClass
@@ -55,6 +56,5 @@ partial class TestClass
 
             Assert.Equal(expected, actual);
         }
-
     }
 }
